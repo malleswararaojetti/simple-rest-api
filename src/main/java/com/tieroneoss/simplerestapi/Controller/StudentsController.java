@@ -5,6 +5,7 @@ import com.tieroneoss.simplerestapi.service.StudentsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -46,5 +47,12 @@ public class StudentsController {
     @PutMapping("/student")
     public ResponseEntity<?> updateStudent(@RequestBody Students student){
         return new ResponseEntity<>(service.updateStudent(student), HttpStatus.OK);
+    }
+
+    //function for pagination
+    @GetMapping("/students/{pageNo}")
+    public ResponseEntity<?> findPaginated(@PathVariable (value = "pageNo") int pageNo, Model model){
+        int pageSize = 3;
+        return new ResponseEntity<>(service.getAllStudentsPaginated(pageNo, pageSize).getContent(), HttpStatus.OK);
     }
 }

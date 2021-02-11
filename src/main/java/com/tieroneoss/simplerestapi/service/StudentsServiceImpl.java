@@ -3,6 +3,9 @@ package com.tieroneoss.simplerestapi.service;
 import com.tieroneoss.simplerestapi.domain.Students;
 import com.tieroneoss.simplerestapi.repository.StudentsRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -59,5 +62,11 @@ public class StudentsServiceImpl  implements StudentsService{
         }
         //we will return null if the student with the given id is not present in the DB
         return null;
+    }
+
+    @Override
+    public Page<Students> getAllStudentsPaginated(int pageNo, int pageSize) {
+        Pageable pageable = PageRequest.of(pageNo-1,pageSize); //We use -1, since Java starts indexing from 0, 1 is the case with typical user understanding
+        return this.repository.findAll(pageable);
     }
 }

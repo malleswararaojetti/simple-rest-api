@@ -1,6 +1,7 @@
 package com.tieroneoss.simplerestapi.service;
 
 import com.tieroneoss.simplerestapi.domain.Students;
+import org.springframework.data.domain.Page;
 
 import java.util.List;
 
@@ -22,5 +23,7 @@ public interface StudentsService {
 
     //To update a student entry
     Students updateStudent(Students students);
+
+    Page<Students> getAllStudentsPaginated(int pageNo, int pageSize);
 
 }
