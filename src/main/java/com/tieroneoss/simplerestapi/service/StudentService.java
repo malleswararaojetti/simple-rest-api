@@ -26,4 +26,6 @@ public interface StudentService {
 
     Page<Student> getAllStudentsPaginated(int pageNo, int pageSize);
 
+    Student findStudentByFirstNameAndStandard(String firstName, int standard);
+
 }

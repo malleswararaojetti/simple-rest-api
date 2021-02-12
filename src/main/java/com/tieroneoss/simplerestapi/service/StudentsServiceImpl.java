@@ -72,4 +72,9 @@ public class StudentsServiceImpl  implements StudentService{
         Pageable pageable = PageRequest.of(pageNo-1, pageSize); //We use -1, since Java starts indexing from 0, 1 is the case with typical user understanding
         return this.repository.findAll(pageable);
     }
+
+    @Override
+    public Student findStudentByFirstNameAndStandard(String firstName, int standard) {
+        return repository.findByFirstNameAndStandard(firstName, standard);
+    }
 }

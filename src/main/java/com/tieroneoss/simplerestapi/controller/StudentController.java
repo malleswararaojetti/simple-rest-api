@@ -10,7 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/api/v1")
 public class StudentController {
 
     private StudentService service;
@@ -31,7 +31,7 @@ public class StudentController {
     }
 
     //This method should return all the student objects
-    @GetMapping("/students")
+    @GetMapping("/allStudents")
     public ResponseEntity<?> getAllStudents() throws StudentNotExistsException {
         if(service.getAllStudents().isEmpty()){
             throw new StudentNotExistsException("No records found");
@@ -69,10 +69,45 @@ public class StudentController {
         return new ResponseEntity<>(studentUpdated, HttpStatus.OK);
     }
 
-    //function for pagination
+    //Code for Filtering and Pagination using PathVariables
+    @GetMapping("/student/{firstName}/{standard}")
+    public ResponseEntity<?> findStudentsByFirstNameAndStandard(@PathVariable("firstName") String firstName, @PathVariable("standard") int standard) throws StudentNotExistsException {
+        final Student studentRecordByNameAndStandard = service.findStudentByFirstNameAndStandard(firstName, standard);
+        if(studentRecordByNameAndStandard==null){
+            throw new StudentNotExistsException("Student not exists");
+        }
+        return new ResponseEntity<>(studentRecordByNameAndStandard, HttpStatus.FOUND);
+    }
+
+    @GetMapping("/students/{pageNo}/{pageSize}")
+    public ResponseEntity<?> findPaginated(@PathVariable (name = "pageNo") int pageNo, @PathVariable(name = "pageSize") int pageSize){
+        return new ResponseEntity<>(service.getAllStudentsPaginated(pageNo, pageSize).getContent(), HttpStatus.OK);
+    }
+    //End of code blocks for filtering and pagination using PathVaribales
+
+   /* //function for pagination
     @GetMapping("/students/{pageNo}")
     public ResponseEntity<?> findPaginated(@PathVariable (value = "pageNo") int pageNo){
         int pageSize = 3;
         return new ResponseEntity<>(service.getAllStudentsPaginated(pageNo, pageSize).getContent(), HttpStatus.OK);
+    }*/
+
+    //Code blocks for Filtering and Pagination using Parameters
+    @GetMapping("/students/paginated")
+    public ResponseEntity<?> findPaginatedUsingParameters(@RequestParam (value = "pageNo", required=true) int pageNo,
+                                                          @RequestParam(value = "pageSize", required=true) int pageSize){
+        return new ResponseEntity<>(service.getAllStudentsPaginated(pageNo, pageSize).getContent(), HttpStatus.OK);
     }
+
+    @GetMapping("/students")
+    public ResponseEntity<?> findStudentsByFirstNameAndStandardUsingParameters(@RequestParam(value = "firstName", required = true) String firstName,
+                                                                               @RequestParam(value = "standard", required = true) int standard)
+            throws StudentNotExistsException {
+        final Student studentRecordByNameAndStandard = service.findStudentByFirstNameAndStandard(firstName, standard);
+        if(studentRecordByNameAndStandard==null){
+            throw new StudentNotExistsException("Student not exists");
+        }
+        return new ResponseEntity<>(studentRecordByNameAndStandard, HttpStatus.FOUND);
+    }
+    //End of code blocks for filtering and pagination using Parameters
 }
