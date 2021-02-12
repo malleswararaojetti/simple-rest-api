@@ -4,7 +4,7 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 
 @Entity
-public class Students {
+public class Student {
 
     @Id
     private int studentId;
@@ -14,12 +14,12 @@ public class Students {
 
 
     //Default no argument constructor
-    public Students() {
+    public Student() {
 
     }
 
     //Parameterized Constructor
-    public Students(int studentId, String firstName, String lastName, String email) {
+    public Student(int studentId, String firstName, String lastName, String email) {
         this.studentId = studentId;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -62,7 +62,7 @@ public class Students {
 
     @Override
     public String toString() {
-        return "Students{" +
+        return "Student{" +
                 "studentId=" + studentId +
                 ", firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +

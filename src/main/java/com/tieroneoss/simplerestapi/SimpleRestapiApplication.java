@@ -11,5 +11,4 @@ public class SimpleRestapiApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(SimpleRestapiApplication.class, args);
 	}
-
 }
