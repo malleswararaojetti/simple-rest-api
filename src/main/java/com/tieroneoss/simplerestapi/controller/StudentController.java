@@ -5,9 +5,12 @@ import com.tieroneoss.simplerestapi.exception.StudentAlreadyExistsException;
 import com.tieroneoss.simplerestapi.exception.StudentNotExistsException;
 import com.tieroneoss.simplerestapi.service.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/v1")
@@ -69,45 +72,19 @@ public class StudentController {
         return new ResponseEntity<>(studentUpdated, HttpStatus.OK);
     }
 
-    //Code for Filtering and Pagination using PathVariables
-    @GetMapping("/student/{firstName}/{standard}")
-    public ResponseEntity<?> findStudentsByFirstNameAndStandard(@PathVariable("firstName") String firstName, @PathVariable("standard") int standard) throws StudentNotExistsException {
-        final Student studentRecordByNameAndStandard = service.findStudentByFirstNameAndStandard(firstName, standard);
-        if(studentRecordByNameAndStandard==null){
-            throw new StudentNotExistsException("Student not exists");
-        }
-        return new ResponseEntity<>(studentRecordByNameAndStandard, HttpStatus.FOUND);
-    }
+    @GetMapping("/students")
+    public List<Student> getStudents(@RequestParam(required = false) String name,
+                                     @RequestParam(required = false) Integer standard,
+                                     @RequestParam(required = false) String email,
+                                     @RequestParam(required = false) Integer pageNumber,
+                                     @RequestParam(required = false) Integer pageSize,
+                                     Pageable pageable) {
+                return service.getStudents(name, email,standard, pageable);
+    }/*
 
-    @GetMapping("/students/{pageNo}/{pageSize}")
-    public ResponseEntity<?> findPaginated(@PathVariable (name = "pageNo") int pageNo, @PathVariable(name = "pageSize") int pageSize){
-        return new ResponseEntity<>(service.getAllStudentsPaginated(pageNo, pageSize).getContent(), HttpStatus.OK);
-    }
-    //End of code blocks for filtering and pagination using PathVaribales
-
-   /* //function for pagination
-    @GetMapping("/students/{pageNo}")
-    public ResponseEntity<?> findPaginated(@PathVariable (value = "pageNo") int pageNo){
-        int pageSize = 3;
+    @GetMapping("/students/paginated")
+    public ResponseEntity<?> findPaginatedUsingParameters(@RequestParam (value = "pageNo", required=false, defaultValue = "1") int pageNo,
+                                                          @RequestParam(value = "pageSize", required=false, defaultValue = "10") int pageSize){
         return new ResponseEntity<>(service.getAllStudentsPaginated(pageNo, pageSize).getContent(), HttpStatus.OK);
     }*/
-
-    //Code blocks for Filtering and Pagination using Parameters
-    @GetMapping("/students/paginated")
-    public ResponseEntity<?> findPaginatedUsingParameters(@RequestParam (value = "pageNo", required=true) int pageNo,
-                                                          @RequestParam(value = "pageSize", required=true) int pageSize){
-        return new ResponseEntity<>(service.getAllStudentsPaginated(pageNo, pageSize).getContent(), HttpStatus.OK);
-    }
-
-    @GetMapping("/students")
-    public ResponseEntity<?> findStudentsByFirstNameAndStandardUsingParameters(@RequestParam(value = "firstName", required = true) String firstName,
-                                                                               @RequestParam(value = "standard", required = true) int standard)
-            throws StudentNotExistsException {
-        final Student studentRecordByNameAndStandard = service.findStudentByFirstNameAndStandard(firstName, standard);
-        if(studentRecordByNameAndStandard==null){
-            throw new StudentNotExistsException("Student not exists");
-        }
-        return new ResponseEntity<>(studentRecordByNameAndStandard, HttpStatus.FOUND);
-    }
-    //End of code blocks for filtering and pagination using Parameters
 }

@@ -1,9 +1,12 @@
 package com.tieroneoss.simplerestapi.domain;
 
+import lombok.Builder;
+
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+@Builder
 @Entity
 @Table(name = "Students_Table")
 public class Student {

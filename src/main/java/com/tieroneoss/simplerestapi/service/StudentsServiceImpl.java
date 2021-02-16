@@ -6,9 +6,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 
+import javax.persistence.criteria.Predicate;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 @Service
@@ -73,8 +77,21 @@ public class StudentsServiceImpl  implements StudentService{
         return this.repository.findAll(pageable);
     }
 
+    //Dynamic Query using specification API
     @Override
-    public Student findStudentByFirstNameAndStandard(String firstName, int standard) {
-        return repository.findByFirstNameAndStandard(firstName, standard);
+    public List<Student> getStudents(String name, String email, Integer standard, Pageable pageable){
+       return (List<Student>) repository.findAll((Specification<Student>) (root, cq, cb) -> {
+            Predicate p = cb.conjunction();
+            if (StringUtils.hasText(name)) {
+               p = cb.and(p, cb.like(root.get("firstName"), "%" + name + "%"));
+            }
+            if (Objects.nonNull(standard)) {
+                p = cb.and(p, cb.equal(root.get("standard"), standard));
+            }
+            if (StringUtils.hasText(email)) {
+                p = cb.and(p, cb.like(root.get("email"), "%" + email + "%"));
+            }
+            return p;
+        }, pageable).getContent();
     }
 }
