@@ -5,6 +5,7 @@ import com.tieroneoss.simplerestapi.exception.StudentAlreadyExistsException;
 import com.tieroneoss.simplerestapi.exception.StudentNotExistsException;
 import com.tieroneoss.simplerestapi.service.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -79,7 +80,8 @@ public class StudentController {
                                      @RequestParam(required = false) Integer pageNumber,
                                      @RequestParam(required = false) Integer pageSize,
                                      Pageable pageable) {
-                return service.getStudents(name, email,standard, pageable);
+        Pageable p = PageRequest.of(pageNumber, pageSize);
+                return service.getStudents(name, email,standard, p);
     }/*
 
     @GetMapping("/students/paginated")
