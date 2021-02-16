@@ -82,13 +82,13 @@ public class StudentsServiceImpl  implements StudentService{
     public List<Student> getStudents(String name, String email, Integer standard, Pageable pageable){
        return (List<Student>) repository.findAll((Specification<Student>) (root, cq, cb) -> {
             Predicate p = cb.conjunction();
-            if (StringUtils.hasText(name)) {
+            if (StringUtils.hasText(name)) {//The query will be added and executed only if it has a value passed it to
                p = cb.and(p, cb.like(root.get("firstName"), "%" + name + "%"));
             }
-            if (Objects.nonNull(standard)) {
+            if (Objects.nonNull(standard)) {//The query will be added and executed only if it has a value passed it to
                 p = cb.and(p, cb.equal(root.get("standard"), standard));
             }
-            if (StringUtils.hasText(email)) {
+            if (StringUtils.hasText(email)) {//The query will be added and executed only if it has a value passed it to
                 p = cb.and(p, cb.like(root.get("email"), "%" + email + "%"));
             }
             return p;
