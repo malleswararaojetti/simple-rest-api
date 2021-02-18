@@ -16,12 +16,12 @@ import java.util.Objects;
 import java.util.Optional;
 
 @Service
-public class StudentsServiceImpl  implements StudentService{
+public class StudentServiceImpl implements StudentService{
 
     StudentRepository repository;
 
     @Autowired
-    public StudentsServiceImpl(StudentRepository repository){
+    public StudentServiceImpl(StudentRepository repository){
         this.repository = repository;
     }
 
@@ -47,13 +47,12 @@ public class StudentsServiceImpl  implements StudentService{
     }
 
     @Override
-    public String deleteStudent(int id) {
+    public String deleteStudent(int id){
         Student student = null;
-        final Optional<Student> studentToBeDeleted = repository.findById(id);
-        //Checking if the student with the given id is present. We will delete the entry and return the deleted entry in case it is present.
-        if(studentToBeDeleted.isPresent()){
-            student = studentToBeDeleted.get();
-            repository.deleteById(id);
+        student = repository.findById(id).get();
+        if(student!=null)
+        {
+            repository.deleteById(student.getStudentId());
             return "Student Record Deleted Successfully.";
         }
         return null;
