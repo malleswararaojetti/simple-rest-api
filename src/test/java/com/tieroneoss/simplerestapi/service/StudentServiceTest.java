@@ -40,7 +40,12 @@ class StudentServiceTest {
     @Test
     void getAllStudents() {
         List<Student> studentList = new ArrayList<Student>();
-        when(service.getAllStudents()).thenReturn(studentList);
+        Student student = new Student(1, "Ramesh", "V","rameshv@gamil.com", 10);
+        studentList.add(student);
+
+        repository.save(student);
+        when(repository.findAll()).thenReturn(studentList);
+        assertEquals(service.getAllStudents().get(0).getFirstName(), "Ramesh");
         verify(repository, times(1)).findAll();
     }
 
@@ -63,9 +68,13 @@ class StudentServiceTest {
         verify(repository, times(1)).findById(any());
     }
 
-
     @Test
     void updateStudent() {
+        Student student1 = new Student(5, "Ramesh", "V","ramesh@gamil.com", 10);
+        when(repository.findById(5)).thenReturn(Optional.of(student1));
+        student1.setEmail("newemail.v@gmail.com");
+        service.updateStudent(student1);
+        assertEquals("newemail.v@gmail.com", student1.getEmail());
     }
 
     @Test

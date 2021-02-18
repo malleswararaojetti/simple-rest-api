@@ -48,11 +48,11 @@ public class StudentServiceImpl implements StudentService{
 
     @Override
     public String deleteStudent(int id){
-        Student student = null;
-        student = repository.findById(id).get();
-        if(student!=null)
+        Optional<Student> student = null;
+        student = repository.findById(id);
+        if(student.isPresent())
         {
-            repository.deleteById(student.getStudentId());
+            repository.deleteById(student.get().getStudentId());
             return "Student Record Deleted Successfully.";
         }
         return null;
