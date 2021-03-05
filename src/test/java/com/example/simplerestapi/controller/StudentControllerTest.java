@@ -1,4 +1,4 @@
-package com.tieroneoss.simplerestapi.controller;
+package com.example.simplerestapi.controller;
 
 import org.junit.jupiter.api.Test;
 

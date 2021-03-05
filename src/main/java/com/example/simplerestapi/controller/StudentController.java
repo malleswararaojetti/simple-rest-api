@@ -1,9 +1,9 @@
-package com.tieroneoss.simplerestapi.controller;
+package com.example.simplerestapi.controller;
 
-import com.tieroneoss.simplerestapi.domain.Student;
-import com.tieroneoss.simplerestapi.exception.StudentAlreadyExistsException;
-import com.tieroneoss.simplerestapi.exception.StudentNotExistsException;
-import com.tieroneoss.simplerestapi.service.StudentService;
+import com.example.simplerestapi.exception.StudentNotExistsException;
+import com.example.simplerestapi.domain.Student;
+import com.example.simplerestapi.exception.StudentAlreadyExistsException;
+import com.example.simplerestapi.service.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@CrossOrigin("http://localhost:4200/")
 @RestController
 @RequestMapping("/api/v1")
 public class StudentController {

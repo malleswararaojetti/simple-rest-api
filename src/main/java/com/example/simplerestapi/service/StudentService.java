@@ -1,6 +1,6 @@
-package com.tieroneoss.simplerestapi.service;
+package com.example.simplerestapi.service;
 
-import com.tieroneoss.simplerestapi.domain.Student;
+import com.example.simplerestapi.domain.Student;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 

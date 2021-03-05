@@ -1,4 +1,4 @@
-package com.tieroneoss.simplerestapi.exception;
+package com.example.simplerestapi.exception;
 
 import java.util.Date;
 

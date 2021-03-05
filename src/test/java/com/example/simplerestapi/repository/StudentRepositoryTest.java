@@ -1,6 +1,6 @@
-package com.tieroneoss.simplerestapi.repository;
+package com.example.simplerestapi.repository;
 
-import com.tieroneoss.simplerestapi.domain.Student;
+import com.example.simplerestapi.domain.Student;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;

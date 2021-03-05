@@ -1,8 +1,8 @@
-package com.tieroneoss.simplerestapi.service;
+package com.example.simplerestapi.service;
 
-import com.tieroneoss.simplerestapi.domain.Student;
-import com.tieroneoss.simplerestapi.exception.StudentNotExistsException;
-import com.tieroneoss.simplerestapi.repository.StudentRepository;
+import com.example.simplerestapi.domain.Student;
+import com.example.simplerestapi.exception.StudentNotExistsException;
+import com.example.simplerestapi.repository.StudentRepository;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.runner.RunWith;

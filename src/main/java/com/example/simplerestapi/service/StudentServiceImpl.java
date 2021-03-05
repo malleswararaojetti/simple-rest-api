@@ -1,7 +1,7 @@
-package com.tieroneoss.simplerestapi.service;
+package com.example.simplerestapi.service;
 
-import com.tieroneoss.simplerestapi.domain.Student;
-import com.tieroneoss.simplerestapi.repository.StudentRepository;
+import com.example.simplerestapi.repository.StudentRepository;
+import com.example.simplerestapi.domain.Student;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;

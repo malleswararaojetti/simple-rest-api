@@ -1,4 +1,4 @@
-package com.tieroneoss.simplerestapi.domain;
+package com.example.simplerestapi.domain;
 
 import lombok.Builder;
 
